@@ -18,7 +18,7 @@ After starting Spring Boot application it will ask you to enter the number of tr
 
 
 # Sample result
-![game](https://github.com/samir-amanov/dragons/assets/50835183/e9430d55-e3e6-43f6-876c-27e0c57158ce)
+![game.png](..%2F..%2Fgame.png)
 
 * This screenshot shows sample result after run. "1" is entered for the number of tries, so application will play the game only one time. 
 * Final result will show Score, Gold, Lives, Turn and either VICTORY or DEFEAT after the game finished, it will do it for each try.
