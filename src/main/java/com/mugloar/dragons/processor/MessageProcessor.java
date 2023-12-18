@@ -15,11 +15,15 @@ public class MessageProcessor {
 
 	private static final String ESC = "Escort";
 	private static final String DEF = "Defending";
+	private static final String TOP = "NoMessages";
 	private static final String LEVEL_SURE = "Sure thing";
 	private static final String LEVEL_CAKE = "Piece of cake";
 	private static final String LEVEL_PARK = "Walk in the park";
 	private static final String LEVEL_QUITE = "Quite likely";
 	private static final String LEVEL_RISKY = "Risky";
+	private static final String LEVEL_FIRE = "Playing with fire";
+	private static final String LEVEL_DET = "Rather detrimental";
+	private static final String LEVEL_GAMBLE = "Gamble";
 
 	public List<String> findAdIds(Message[] messages, Set<String> seenIds, int gold, String specialMission) {
 		if (specialMission.equals(DEF)) {
@@ -27,6 +31,9 @@ public class MessageProcessor {
 			return getAdIds(messageList, seenIds);
 		} else if (specialMission.equals(ESC)) {
 			List<Message> messageList = escortLevelId(messages);
+			return getAdIds(messageList, seenIds);
+		} else if (specialMission.equals(TOP)) {
+			List<Message> messageList = noMessageLevelIds(messages);
 			return getAdIds(messageList, seenIds);
 		} else if (gold <= 50) {
 			List<Message> messageList = firstLevelIds(messages);
@@ -55,6 +62,15 @@ public class MessageProcessor {
 						|| message.getProbability().equals(LEVEL_PARK)
 						|| message.getProbability().equals(LEVEL_QUITE)
 						|| message.getProbability().equals(LEVEL_RISKY))
+				.toList();
+	}
+
+	public List<Message> noMessageLevelIds(Message[] messages) {
+		return Arrays.asList(messages).stream()
+				.filter(message -> message.getProbability().equals(LEVEL_FIRE)
+						|| message.getProbability().equals(LEVEL_DET)
+						|| message.getProbability().equals(LEVEL_GAMBLE))
+				.max(Comparator.comparingInt(Message::getReward)).stream()
 				.toList();
 	}
 

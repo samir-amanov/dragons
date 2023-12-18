@@ -41,8 +41,7 @@ public class DragonsOfMugloarService {
 
 	public SolvingResult solveMessageWithRetry(String gameId, String adId) {
 		String solveUrl = BASE_URL + gameId + "/solve/" + adId;
-		int maxRetries = 1;
-
+		int maxRetries = 2;
 		for (int retry = 0; retry <= maxRetries; retry++) {
 			try {
 				ResponseEntity<SolvingResult> responseEntity =

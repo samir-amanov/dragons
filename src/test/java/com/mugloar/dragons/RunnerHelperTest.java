@@ -35,12 +35,12 @@ public class RunnerHelperTest {
 	@Test
 	public void testSpecialMissionDefending() {
 		Message[] messages = new Message[]{
-				new Message("Ad1", "Sure thing", 20, "Defending"),
-				new Message("Ad2", "Piece of cake", 40, "Escort"),
-				new Message("Ad3", "Quite likely", 60, ""),
-				new Message("Ad4", "Walk in the park", 80, "Help"),
-				new Message("Ad5", "Gamble", 100, "Help"),
-				new Message("Ad6", "Risky", 120, "Defending")
+				new Message("Ad1", "Defending", 20, "Sure thing"),
+				new Message("Ad2", "Escort", 40, "Piece of cake"),
+				new Message("Ad3", "", 60, "Quite likely"),
+				new Message("Ad4", "Help", 80, "Walk in the park"),
+				new Message("Ad5", "Help", 100, "Gamble"),
+				new Message("Ad6", "Defending", 120, "Risky")
 		};
 		ResponseEntity<PurchaseItemResult> purchaseItemResult = mockPurchaseItemResult(true);
 
@@ -52,11 +52,11 @@ public class RunnerHelperTest {
 	@Test
 	public void testSpecialMissionEscort() {
 		Message[] messages = new Message[]{
-				new Message("Ad2", "Piece of cake", 40, "Escort"),
-				new Message("Ad3", "Quite likely", 60, ""),
-				new Message("Ad4", "Walk in the park", 80, "Help"),
-				new Message("Ad5", "Gamble", 100, "Help"),
-				new Message("Ad6", "Risky", 120, "Escort")
+				new Message("Ad2", "Escort", 40, "Piece of cake"),
+				new Message("Ad3", "", 60, "Quite likely"),
+				new Message("Ad4", "Help", 80, "Walk in the park"),
+				new Message("Ad5", "Help", 100, "Gamble"),
+				new Message("Ad6", "Escort", 120, "Risky")
 		};
 		ResponseEntity<PurchaseItemResult> purchaseItemResult = mockPurchaseItemResult(true);
 
@@ -68,14 +68,14 @@ public class RunnerHelperTest {
 	@Test
 	public void testSpecialMissionNoMission() {
 		Message[] messages = new Message[]{
-				new Message("Ad1", "Sure thing", 100, "Steal"),
-				new Message("Ad3", "Quite likely", 60, ""),
-				new Message("Ad4", "Walk in the park", 80, "Help"),
-				new Message("Ad5", "Gamble", 100, "Help")
+				new Message("Ad1", "Steal", 100, "Sure thing"),
+				new Message("Ad3", "", 60, "Quite likely"),
+				new Message("Ad4", "Help", 80, "Walk in the park"),
+				new Message("Ad5", "Help", 100, "Gamble")
 		};
 
 		String result = runnerHelper.specialMission(mockController, messages, 2, 200, "gameId");
-		assertEquals("", result);
+		assertEquals("Classic", result);
 	}
 
 	@Test

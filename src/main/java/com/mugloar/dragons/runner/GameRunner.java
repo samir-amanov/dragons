@@ -41,6 +41,7 @@ public class GameRunner {
 		System.out.print("Enter number of tries to start the game... ");
 		int repeats = new Scanner(System.in).nextInt();
 		int counter = 0;
+		int adIdCounter = 0;
 
 		for (int i = 1; i <= repeats; i++) {
 			ResponseEntity<String> startResponse = dragonsOfMugloarController.startGame();
@@ -67,11 +68,18 @@ public class GameRunner {
 				List<String> adIds =
 						messageProcessor.findAdIds(messagesResponse.getBody(), seenIds, gold, specialMission);
 				fileLogger.info("Number of adds found with given criteria: " + adIds.size());
+				if (adIds.isEmpty()) {
+					adIdCounter ++;
+					if (adIdCounter > 2 && lives > 2) {
+						adIds = messageProcessor.findAdIds(messagesResponse.getBody(), seenIds, gold, "NoMessages");
+					}
+				}
 				for (String adId : adIds) {
 					ResponseEntity<SolvingResult> solvingResult = dragonsOfMugloarController.solveMessage(gameId, adId);
 					if (solvingResult == null || solvingResult.getBody() == null) {
 						continue;
 					}
+					adIdCounter = 0;
 					seenIds.add(adId);
 					lives = solvingResult.getBody().getLives();
 					gold = solvingResult.getBody().getGold();
