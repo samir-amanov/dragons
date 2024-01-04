@@ -6,7 +6,9 @@ import com.mugloar.dragons.model.PurchaseItemResult;
 import java.text.DecimalFormat;
 import java.util.Arrays;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RunnerHelper {
 
 	private static final String CLASSIC = "Classic";
@@ -17,8 +19,13 @@ public class RunnerHelper {
 	private static final String FUEL = "rf";
 	private static final String FALSE_RESULT = "false";
 
-	public String specialMission(DragonsOfMugloarController dragonsOfMugloarController, Message[] messages, int lives,
-			int gold, String gameId) {
+	private final DragonsOfMugloarController dragonsOfMugloarController;
+
+	public RunnerHelper(DragonsOfMugloarController dragonsOfMugloarController) {
+		this.dragonsOfMugloarController = dragonsOfMugloarController;
+	}
+
+	public String specialMission(Message[] messages, int lives, int gold, String gameId) {
 		if (lives >= 2 && gold >= 200 && !Arrays.asList(messages).stream()
 				.filter(message -> message.getMessage().contains(DEF)).toList().isEmpty()) {
 			ResponseEntity<PurchaseItemResult> purchaseItemResult =
@@ -43,8 +50,7 @@ public class RunnerHelper {
 		return CLASSIC;
 	}
 
-	public int purchaseLives(DragonsOfMugloarController dragonsOfMugloarController, int lives, int gold,
-			String gameId) {
+	public int purchaseLives(int lives, int gold, String gameId) {
 		if (lives <= 2 && gold >= 50) {
 			ResponseEntity<PurchaseItemResult> purchaseItemResult = null;
 			for (int i = 0; i < 2; i++) {

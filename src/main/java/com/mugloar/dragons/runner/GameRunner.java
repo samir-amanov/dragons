@@ -26,14 +26,14 @@ public class GameRunner {
 	private final MessageProcessor messageProcessor;
 	private static final Logger fileLogger = LoggerFactory.getLogger("general");
 	private static final Logger consoleLogger = LoggerFactory.getLogger("stats");
-
-	RunnerHelper helper = new RunnerHelper();
+	private final RunnerHelper runnerHelper;
 
 	public GameRunner(DragonsOfMugloarController dragonsOfMugloarController, MessageProcessor messageProcessor,
-			ConfigurableApplicationContext context) {
+			ConfigurableApplicationContext context, RunnerHelper runnerHelper) {
 		this.dragonsOfMugloarController = dragonsOfMugloarController;
 		this.messageProcessor = messageProcessor;
 		this.context = context;
+		this.runnerHelper = runnerHelper;
 	}
 
 	public void runGame() {
@@ -62,7 +62,7 @@ public class GameRunner {
 					continue;
 				}
 				specialMission =
-						helper.specialMission(dragonsOfMugloarController, messagesResponse.getBody(), lives, gold,
+						runnerHelper.specialMission(messagesResponse.getBody(), lives, gold,
 								gameId);
 				fileLogger.info("Special Mission: " + specialMission);
 				List<String> adIds =
@@ -85,7 +85,7 @@ public class GameRunner {
 					gold = solvingResult.getBody().getGold();
 					score = solvingResult.getBody().getScore();
 
-					int purchasedLives = helper.purchaseLives(dragonsOfMugloarController, lives, gold, gameId);
+					int purchasedLives = runnerHelper.purchaseLives(	lives, gold, gameId);
 					if (purchasedLives == 0) {
 						continue;
 					} else {
@@ -109,7 +109,7 @@ public class GameRunner {
 			consoleLogger.info("###");
 			consoleLogger.info("###");
 		}
-		consoleLogger.info("Win percentage is: " + helper.decimalFormatter(counter, repeats) + "%");
+		consoleLogger.info("Win percentage is: " + runnerHelper.decimalFormatter(counter, repeats) + "%");
 		stopApplication();
 	}
 

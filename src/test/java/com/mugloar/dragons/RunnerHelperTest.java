@@ -20,7 +20,7 @@ public class RunnerHelperTest {
 
 	@BeforeEach
 	public void setUp() {
-		runnerHelper = new RunnerHelper();
+		runnerHelper = new RunnerHelper(mockController);
 		mockController = mock(DragonsOfMugloarController.class);
 	}
 
@@ -45,7 +45,7 @@ public class RunnerHelperTest {
 		ResponseEntity<PurchaseItemResult> purchaseItemResult = mockPurchaseItemResult(true);
 
 		when(mockController.purchaseItem("gameId", "wingpot")).thenReturn(purchaseItemResult);
-		String result = runnerHelper.specialMission(mockController, messages, 2, 200, "gameId");
+		String result = runnerHelper.specialMission(messages, 2, 200, "gameId");
 		assertEquals("Defending", result);
 	}
 
@@ -61,7 +61,7 @@ public class RunnerHelperTest {
 		ResponseEntity<PurchaseItemResult> purchaseItemResult = mockPurchaseItemResult(true);
 
 		when(mockController.purchaseItem("gameId", "rf")).thenReturn(purchaseItemResult);
-		String result = runnerHelper.specialMission(mockController, messages, 2, 400, "gameId");
+		String result = runnerHelper.specialMission(messages, 2, 400, "gameId");
 		assertEquals("Escort", result);
 	}
 
@@ -74,7 +74,7 @@ public class RunnerHelperTest {
 				new Message("Ad5", "Help", 100, "Gamble")
 		};
 
-		String result = runnerHelper.specialMission(mockController, messages, 2, 200, "gameId");
+		String result = runnerHelper.specialMission(messages, 2, 200, "gameId");
 		assertEquals("Classic", result);
 	}
 
@@ -82,7 +82,7 @@ public class RunnerHelperTest {
 	public void testPurchaseLives() {
 		ResponseEntity<PurchaseItemResult> purchaseItemResult = mockPurchaseItemResult(true);
 		when(mockController.purchaseItem("gameId", "hpot")).thenReturn(purchaseItemResult);
-		int result = runnerHelper.purchaseLives(mockController, 2, 60, "gameId");
+		int result = runnerHelper.purchaseLives(2, 60, "gameId");
 		assertEquals(4, result); // assuming that it will purchase 2 lives
 	}
 
